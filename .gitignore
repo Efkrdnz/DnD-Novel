@@ -1,0 +1,7 @@
+node_modules/
+out/
+dist/
+*.tmp
+*.log
+.multimine/
+apps/desktop/e2e/results/

@@ -1,0 +1,35 @@
+{
+  "name": "@dnd/ai",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.90",
+    "@ai-sdk/google": "^4.0.107",
+    "@ai-sdk/groq": "^4.0.72",
+    "@ai-sdk/openai": "^4.0.104",
+    "@ai-sdk/openai-compatible": "^3.0.80",
+    "@dnd/engine": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "ai": "^7.0.155",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./kinds": "./src/kinds.ts",
+    "./presets": "./src/memoryPresets.ts",
+    "./wizard": "./src/worldWizard.ts",
+    "./character": "./src/characterWizard.ts"
+  }
+}

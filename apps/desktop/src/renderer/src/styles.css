@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+
+/* Painterly JRPG look: pastel sky UI, with parchment, gilt and a storybook serif for the story itself. */
+@theme {
+  --font-sans: 'Nunito Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Cinzel Decorative', Georgia, serif;
+  --font-dialogue: 'Alegreya Variable', Georgia, serif;
+
+  --color-ink: #2b2350;
+  --color-sakura: #ff8fb8;
+  --color-gold: #f5b942;
+  --color-mint: #5fd4b0;
+
+  --color-parchment: #fbf3e2;
+  --color-parchment-edge: #e9d6ad;
+  --color-gilt: #e8b94f;
+  --color-gilt-deep: #a8742a;
+  --color-dusk: #4b3f8f;
+
+  --animate-shake: shake 0.42s ease-in-out 2;
+  --animate-tremble: tremble 0.18s linear 6;
+  --animate-glow: glow 2.4s ease-in-out infinite;
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    20% { transform: translateX(-4px) rotate(-1deg); }
+    40% { transform: translateX(4px) rotate(1deg); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
+  @keyframes tremble {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, -1px); }
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(255 143 184 / 0); }
+    50% { box-shadow: 0 0 22px 2px rgb(255 143 184 / 0.45); }
+  }
+
+  --animate-twinkle: twinkle 3.2s ease-in-out infinite;
+  --animate-bob: bob 3.4s ease-in-out infinite;
+  --animate-caret: caret 1s steps(1) infinite;
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.15; transform: scale(0.5) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(45deg); }
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes caret {
+    50% { opacity: 0; }
+  }
+}
+
+@keyframes drift {
+  from { transform: translateX(-40vw); }
+  to { transform: translateX(140vw); }
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #d8ecff;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #ffd1e3;
+}
+
+:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 2px;
+}
+
+.glass {
+  background: rgb(255 255 255 / 0.66);
+  backdrop-filter: blur(16px) saturate(1.25);
+  border: 2px solid rgb(255 255 255 / 0.85);
+  box-shadow:
+    0 14px 34px -14px rgb(99 102 241 / 0.4),
+    inset 0 1px 0 rgb(255 255 255 / 0.9);
+}
+
+.title-shimmer {
+  background: linear-gradient(90deg, #6d5dfc, #ff6fa8, #f5b942, #6d5dfc);
+  background-size: 200% auto;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+
+/* Warm paper with a faint painted grain (an inline SVG noise, no image files). */
+.parchment {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.2 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(120% 140% at 50% 0%, #fffaf0 0%, var(--color-parchment) 55%, #f3e3c2 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.7),
+    inset 0 0 26px rgb(196 160 98 / 0.28),
+    0 10px 24px -14px rgb(120 84 30 / 0.45);
+}
+
+/* A double gilded border: gold gradient outside, a thin light line inside. */
+.frame-gilt {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #fff3c4, var(--color-gilt) 35%, var(--color-gilt-deep) 70%, #ffe7a3) border-box;
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.85);
+}
+
+/* Rarity frames: legendary gear catches the light, mythic gear shifts through colours. */
+.frame-legendary {
+  position: relative;
+  overflow: hidden;
+}
+.frame-legendary::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 0.85) 50%, transparent 60%);
+  animation: sheen 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.frame-mythic {
+  background: conic-gradient(from var(--spin, 0deg), #ff6fa8, #f5b942, #5fd4b0, #6d9cff, #b26dfc, #ff6fa8) !important;
+  animation: spin-hue 4s linear infinite;
+}
+@property --spin {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes spin-hue {
+  to { --spin: 360deg; }
+}
+@keyframes sheen {
+  0%, 55% { transform: translateX(-60%); }
+  100% { transform: translateX(60%); }
+}
+
+/* Softens bubble edges so they read as painted rather than drawn. */
+.brush-edge {
+  -webkit-mask-image: radial-gradient(140% 160% at 50% 50%, #000 72%, rgb(0 0 0 / 0.86) 100%);
+  mask-image: radial-gradient(140% 160% at 50% 50%, #000 72%, rgb(0 0 0 / 0.86) 100%);
+}
+
+.scroll-fancy::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-fancy::-webkit-scrollbar-thumb {
+  background: rgb(139 92 246 / 0.28);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+
+/* Generated art: a soft light sweeping across a picture while it is drawn. */
+.art-shimmer {
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  background-size: 250% 100%;
+  animation: art-shimmer 1.4s linear infinite;
+}
+@keyframes art-shimmer {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+/* Reduced motion: set on <html> from Settings > Appearance (or the OS preference). */
+[data-motion='reduced'] *,
+[data-motion='reduced'] *::before,
+[data-motion='reduced'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}

@@ -1,0 +1,218 @@
+import type { WorldDraftInput } from '@dnd/engine'
+
+// The Ashen Reach: dark fantasy in the ruins of a fallen empire. It renames the abilities, replaces the skill
+// list and runs on Hemocraft, magic paid in blood.
+
+const skill = (name: string, ability: 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha') => ({
+  id: name.toLowerCase().replace(/[^a-z]+/g, '-'),
+  name,
+  ability,
+})
+
+export const ashenReach: WorldDraftInput = {
+  id: 'ashen-reach',
+  name: 'The Ashen Reach',
+  summary:
+    'Three hundred years after the Sun-Throne fell, its empire is a grey wasteland under a red moon. The dead do not always stay down, blood buys power, and the few walled towns survive on bargains no one speaks of aloud.',
+  tone: { label: 'Grim dark fantasy', notes: 'Bleak and tense with moments of hard-won warmth. Every power has a price; trust is rare and precious. Horror stays suggestive, not gratuitous.' },
+  currencies: [
+    { id: 'chit', name: 'Bone Chit', baseValue: 1 },
+    { id: 'mark', name: 'Iron Mark', baseValue: 10 },
+    { id: 'shard', name: 'Crown Shard', baseValue: 100 },
+  ],
+  regions: [
+    {
+      id: 'cinder-vale',
+      name: 'Cinder Vale',
+      kind: 'wasteland',
+      summary: 'Ash fields around the last lantern-lit towns.',
+      description: 'Grey snow falls all year. Lantern-towns huddle behind salt walls, and travellers keep a candle burning because the ashwights hate the light.',
+    },
+    {
+      id: 'drowned-court',
+      name: 'The Drowned Court',
+      kind: 'ruin',
+      summary: 'The sunken imperial capital, half under black water.',
+      description: 'Palaces lean out of a still lake. The Red Synod rules what is left, and the drowned nobility still hold court beneath the surface on moonless nights.',
+    },
+    {
+      id: 'thornwood',
+      name: 'The Thornwood',
+      kind: 'forest',
+      summary: 'A forest of iron-hard thorns that grows toward warmth.',
+      description: "The thorns creep a little closer to the towns each year. Witches live inside it, and some say the Thornwood is the empire's last sorcery, still obeying an order no one remembers.",
+    },
+    {
+      id: 'saltmarch',
+      name: 'Saltmarch',
+      kind: 'coast',
+      summary: "Salt flats and a smugglers' harbour on a grey sea.",
+      description: 'Salt is protection here, and the salt-lords grow fat on it. Ships come from beyond the fog, though no one admits where they sail from.',
+    },
+    {
+      id: 'black-spire',
+      name: 'The Black Spire',
+      kind: 'ruin',
+      summary: 'The tower where the Sun-Throne fell, still smoking.',
+      description: 'No one who climbs it returns unchanged. At its peak, they say, the last emperor still sits, waiting for an heir to bleed on the throne.',
+    },
+  ],
+  factions: [
+    { id: 'lantern-wardens', name: 'Lantern Wardens', regionId: 'cinder-vale', attitude: 'friendly', summary: 'Grim guardians of the lantern-towns.', description: 'They keep the lights burning and the gates shut. Underpaid, overworked and honest, mostly.' },
+    { id: 'red-synod', name: 'The Red Synod', regionId: 'drowned-court', attitude: 'hostile', summary: 'Blood-priests who rule the drowned capital.', description: 'They hoard Hemocraft and tithe blood from every town under their protection. Their Hierarch is three hundred years old.' },
+    { id: 'thorn-sisters', name: 'The Thorn Sisters', regionId: 'thornwood', attitude: 'wary', summary: 'Witches who bargain with the Thornwood.', description: 'They trade cures for secrets and keep every promise to the letter. Their price is never coin.' },
+    { id: 'salt-lords', name: 'The Salt Lords', regionId: 'saltmarch', attitude: 'neutral', summary: 'Merchant-princes who control the salt trade.', description: 'Rich, ruthless and practical. They will sell salt to anyone, including the things that fear it.' },
+  ],
+  gods: [
+    { id: 'the-pale-mother', name: 'The Pale Mother', domain: 'Death, rest, mercy', summary: 'Goddess of a quiet grave; the only god many still pray to.' },
+    { id: 'red-saint', name: 'The Red Saint', domain: 'Blood, sacrifice, power', summary: "The Synod's god, who may once have been a man." },
+    { id: 'the-sleeper', name: 'The Sleeper Under the Moon', domain: 'Dreams, madness, the moon', summary: 'Something vast that dreams the red moon. Its cultists are never sane.' },
+  ],
+  races: [
+    { id: 'reachfolk', name: 'Reachfolk', summary: 'Hard, practical humans of the lantern-towns.' },
+    { id: 'hollowborn', name: 'Hollowborn', summary: 'Born without a shadow; distrusted, and immune to some curses.' },
+    { id: 'drowned', name: 'The Drowned', summary: 'Pale imperial nobles who survived under the lake, changed.' },
+    { id: 'thornkin', name: 'Thornkin', summary: 'Bark-skinned folk born in the Thornwood, half plant.' },
+  ],
+  history: [
+    { id: 'golden-age', title: 'The Age of the Sun-Throne', when: 'A thousand years ago', summary: 'An empire of light ruled every land the eye could see, fuelled by sorcery no one now understands.' },
+    { id: 'blood-pact', title: 'The First Blood Pact', when: 'Five hundred years ago', summary: 'Desperate imperial mages traded blood for power, birthing Hemocraft and the Red Saint.' },
+    { id: 'fall', title: 'The Fall of the Sun-Throne', when: 'Three hundred years ago', summary: 'The emperor tried to make himself a god atop the Black Spire. The sky burned, the capital drowned and the ash began to fall.' },
+    { id: 'red-moon', title: 'The Red Moon Rises', when: 'The same night', summary: 'The moon turned red and the dead began to walk on moonlit nights.' },
+    { id: 'lantern-oath', title: 'The Lantern Oath', when: 'Two hundred years ago', summary: 'The surviving towns swore to keep their lights burning forever; the Lantern Wardens were founded.' },
+    { id: 'thorn-advance', title: 'The Thornwood Wakes', when: 'Ten years ago', summary: 'The Thornwood began to grow again, swallowing two towns in a single winter.' },
+  ],
+  powerSystem: {
+    name: 'Hemocraft',
+    summary:
+      'Power in the Reach is bought with blood. A Hemocrafter draws on their own Vitae, the spark in the blood, to work curses, shape bone and burn ash. When the Vitae runs dry, the blood itself pays.',
+    sources: [
+      { id: 'blood', name: 'Blood', ability: 'con', description: 'Raw vitality turned into force and healing.' },
+      { id: 'bone', name: 'Bone', ability: 'int', description: 'Shaping bone: armour, blades and the bodies of the dead.' },
+      { id: 'curse', name: 'Curse', ability: 'cha', description: 'Words that bind fate and weaken foes.' },
+      { id: 'ash', name: 'Ash', ability: 'wis', description: 'The memory of the burning sky: fire, sight and omens.' },
+    ],
+    resource: { name: 'Vitae', description: 'The spark in the blood. It returns slowly with rest and food.' },
+    ranks: [
+      { name: 'Marked', minLevel: 1, description: 'Bears the first scar-sigil; small workings only.' },
+      { name: 'Bound', minLevel: 4, description: 'Has sworn a blood-oath; their workings leave lasting marks.' },
+      { name: 'Sovereign', minLevel: 8, description: 'Commands Hemocraft as the old emperors did, and is hunted for it.' },
+    ],
+    limits: [
+      'Spells beyond your Vitae cost HP instead, one per point.',
+      'Hemocraft cannot heal the one who casts it.',
+      'Every working leaves a visible scar-sigil; the Red Synod can sense them.',
+    ],
+    templates: [
+      { name: 'Crimson Lash', kind: 'attack', ability: 'con', dice: '2d6', cost: 1, source: 'Blood', rank: 'Marked', description: 'A whip of hardened blood.' },
+      { name: 'Bone Ward', kind: 'buff', ability: 'int', cost: 1, source: 'Bone', rank: 'Marked', description: 'Bone plates rise under the skin.' },
+      { name: 'Hex of Ruin', kind: 'attack', ability: 'cha', dice: '1d10', cost: 1, source: 'Curse', rank: 'Marked', description: 'A whispered doom that rots from inside.' },
+      { name: 'Ash Sight', kind: 'utility', ability: 'wis', cost: 1, source: 'Ash', rank: 'Marked', description: 'See what the ash remembers of a place.' },
+      { name: 'Heartstop', kind: 'attack', ability: 'con', dice: '4d6', cost: 3, source: 'Blood', rank: 'Bound', description: "Seize the blood in a foe's heart." },
+      { name: 'Raise the Fallen', kind: 'utility', ability: 'int', cost: 4, source: 'Bone', rank: 'Sovereign', description: 'The dead rise to serve for one night.' },
+    ],
+  },
+  rules: {
+    abilities: {
+      str: { name: 'Might', blurb: 'Strength of arm: lifting, breaking, hitting hard.' },
+      dex: { name: 'Grace', blurb: 'Quickness and poise: dodging, sneaking, aiming.' },
+      con: { name: 'Grit', blurb: 'Endurance and blood: hit points, resisting rot and poison. Fuels Blood workings.' },
+      int: { name: 'Lore', blurb: 'Knowledge of the old empire, bone-craft and ruins.' },
+      wis: { name: 'Dread', blurb: 'The sense for danger and the dead; reading omens.' },
+      cha: { name: 'Allure', blurb: 'Presence that charms, frightens or curses.' },
+    },
+    skills: [
+      skill('Brawn', 'str'),
+      skill('Stealth', 'dex'),
+      skill('Tumbling', 'dex'),
+      skill('Thievery', 'dex'),
+      skill('Endurance', 'con'),
+      skill('Bloodlore', 'int'),
+      skill('Ruin-craft', 'int'),
+      skill('Hunting', 'wis'),
+      skill('Grave-sense', 'wis'),
+      skill('Omens', 'wis'),
+      skill('Healing', 'wis'),
+      skill('Intimidation', 'cha'),
+      skill('Bargaining', 'cha'),
+      skill('Deceit', 'cha'),
+    ],
+  },
+  archetypes: [
+    {
+      name: 'Blood Knight',
+      blurb: "A deserter from the Synod's guard who still bleeds for power, now on their own terms.",
+      attributes: { str: 15, dex: 10, con: 15, int: 8, wis: 12, cha: 10 },
+      hitDie: 12,
+      baseAc: 16,
+      skills: ['Brawn', 'Intimidation', 'Bloodlore'],
+      saves: ['str', 'con'],
+      resource: { name: 'Vitae', max: 3 },
+      powers: [
+        { name: 'Crimson Lash', kind: 'attack', ability: 'con', dice: '2d6', cost: 1, source: 'Blood', rank: 'Marked', description: 'A whip of hardened blood.' },
+        { name: 'Iron Vow', kind: 'buff', ability: 'con', cost: 1, source: 'Blood', rank: 'Marked', description: 'Steel yourself; pain means nothing for a moment.' },
+      ],
+    },
+    {
+      name: 'Bonewright',
+      blurb: "A ruin-scholar who reads the empire's secrets in old bones, and shapes new ones.",
+      attributes: { str: 8, dex: 12, con: 14, int: 15, wis: 13, cha: 10 },
+      hitDie: 6,
+      baseAc: 12,
+      skills: ['Ruin-craft', 'Bloodlore', 'Grave-sense'],
+      saves: ['int', 'wis'],
+      resource: { name: 'Vitae', max: 5 },
+      powers: [
+        { name: 'Bone Ward', kind: 'buff', ability: 'int', cost: 1, source: 'Bone', rank: 'Marked', description: 'Bone plates rise under the skin.' },
+        { name: 'Splinter Volley', kind: 'attack', ability: 'int', dice: '1d10', cost: 1, source: 'Bone', rank: 'Marked', description: 'Shards of bone fly like arrows.' },
+      ],
+    },
+    {
+      name: 'Hexbinder',
+      blurb: "A Thorn Sister's runaway apprentice with a silver tongue and a worse temper.",
+      attributes: { str: 8, dex: 14, con: 13, int: 10, wis: 12, cha: 15 },
+      hitDie: 8,
+      baseAc: 12,
+      skills: ['Deceit', 'Bargaining', 'Omens'],
+      saves: ['wis', 'cha'],
+      resource: { name: 'Vitae', max: 4 },
+      powers: [
+        { name: 'Hex of Ruin', kind: 'attack', ability: 'cha', dice: '1d10', cost: 1, source: 'Curse', rank: 'Marked', description: 'A whispered doom that rots from inside.' },
+        { name: 'Binding Word', kind: 'utility', ability: 'cha', cost: 1, source: 'Curse', rank: 'Marked', description: 'Hold a foe still for a heartbeat.' },
+      ],
+    },
+    {
+      name: 'Ash Pilgrim',
+      blurb: 'A wandering mourner of the Pale Mother who sees the past in falling ash.',
+      attributes: { str: 10, dex: 12, con: 14, int: 8, wis: 15, cha: 13 },
+      hitDie: 8,
+      baseAc: 14,
+      skills: ['Healing', 'Omens', 'Grave-sense'],
+      saves: ['wis', 'cha'],
+      resource: { name: 'Vitae', max: 4 },
+      powers: [
+        { name: 'Ash Sight', kind: 'utility', ability: 'wis', cost: 1, source: 'Ash', rank: 'Marked', description: 'See what the ash remembers of a place.' },
+        { name: 'Cinder Storm', kind: 'attack', ability: 'wis', dice: '1d8', cost: 1, source: 'Ash', rank: 'Marked', description: 'Burning ash whirls around your foes.' },
+      ],
+    },
+    {
+      name: 'Grave Hunter',
+      blurb: 'A Lantern Warden scout who hunts ashwights with silver and salt, no magic at all.',
+      attributes: { str: 12, dex: 15, con: 13, int: 10, wis: 14, cha: 8 },
+      hitDie: 10,
+      baseAc: 14,
+      skills: ['Hunting', 'Stealth', 'Grave-sense', 'Tumbling'],
+      saves: ['dex', 'wis'],
+      resource: null,
+      powers: [
+        { name: 'Salt Shot', kind: 'attack', ability: 'dex', dice: '1d8', cost: 0, description: 'A salt-packed bolt that burns the undead.' },
+        { name: 'Lantern Flare', kind: 'utility', ability: 'wis', cost: 0, description: 'Flash your lantern to drive back the dark.' },
+      ],
+    },
+  ],
+  start: {
+    name: 'The Last Lantern',
+    description: 'A smoky inn inside the salt walls of Emberwick, the last lit town before the ash fields. The bell over the gate has been ringing since dusk.',
+    regionId: 'cinder-vale',
+  },
+}

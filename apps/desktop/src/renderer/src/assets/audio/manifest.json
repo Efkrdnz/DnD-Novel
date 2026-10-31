@@ -1,0 +1,21 @@
+{
+  "sfx": {
+    "dice-roll": "dice-roll.ogg",
+    "dice-land": "dice-land.ogg",
+    "coins": "coins.ogg",
+    "item": "item.ogg",
+    "legendary": "legendary.ogg",
+    "hit": "hit.ogg",
+    "miss": "miss.ogg",
+    "level-up": "level-up.ogg",
+    "quest": "quest.ogg",
+    "page": "page.ogg",
+    "send": "send.ogg"
+  },
+  "ambience": {
+    "dungeon": "dungeon.ogg",
+    "sea": "sea.ogg",
+    "battle": "battle.ogg"
+  },
+  "music": {}
+}
