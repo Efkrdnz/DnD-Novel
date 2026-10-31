@@ -63,7 +63,7 @@ function Game() {
       if (e.ctrlKey && e.key.toLowerCase() === 'm') {
         e.preventDefault()
         update((s) => ({ ...s, audio: { ...s.audio, muted: !s.audio.muted } }))
-      } else if (e.ctrlKey && e.key === ',') {
+      } else if ((e.ctrlKey || e.metaKey) && e.key === ',') {
         e.preventDefault()
         setRoute('settings')
       }

@@ -29,5 +29,7 @@ const SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 mkdirSync(OUT, { recursive: true })
 const render = (size) => new Resvg(SVG, { fitTo: { mode: 'width', value: size } }).render().asPng()
 writeFileSync(join(OUT, 'icon.png'), render(512))
+// macOS wants 1024px; electron-builder turns it into the .icns.
+writeFileSync(join(OUT, 'icon-1024.png'), render(1024))
 writeFileSync(join(OUT, 'icon.ico'), await pngToIco([16, 24, 32, 48, 64, 128, 256].map(render)))
 console.log(`Icon written to ${OUT}`)

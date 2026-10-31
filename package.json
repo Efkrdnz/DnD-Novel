@@ -7,6 +7,7 @@
     "build": "pnpm --filter @dnd/desktop build",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
-    "dist": "pnpm --filter @dnd/desktop dist"
+    "dist": "pnpm --filter @dnd/desktop dist",
+    "dist:mac": "pnpm --filter @dnd/desktop dist:mac"
   }
 }

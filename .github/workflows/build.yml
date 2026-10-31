@@ -1,0 +1,45 @@
+# Builds the unsigned macOS (dmg + zip) and Windows (installer + portable) apps.
+# Runs on a version tag (v1.2.3) or by hand from the Actions tab; the files land in the run's artifacts.
+name: Build
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            dist: dist:mac
+            files: |
+              apps/desktop/dist/*.dmg
+              apps/desktop/dist/*.zip
+          - os: windows-latest
+            dist: dist
+            files: apps/desktop/dist/*.exe
+    runs-on: ${{ matrix.os }}
+    env:
+      # No Apple certificate: keep the ad-hoc signature from electron-builder.yml.
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm ${{ matrix.dist }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DND-TYPESHIT-${{ runner.os }}
+          path: ${{ matrix.files }}
+          if-no-files-found: error

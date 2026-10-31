@@ -3,6 +3,10 @@ import { join } from 'node:path'
 import { createArtCache } from './art/cache'
 import { handleArtProtocol, registerArtScheme } from './art/protocol'
 import { registerIpc } from './ipc'
+import { fixPath } from './shellPath'
+
+// macOS/Linux: find the AI CLIs even when the app was opened from Finder or a launcher.
+fixPath()
 
 // One window per profile: a second launch brings the open one forward instead.
 if (!app.requestSingleInstanceLock()) app.quit()

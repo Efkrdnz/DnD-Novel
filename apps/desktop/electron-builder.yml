@@ -1,5 +1,7 @@
 # Windows installer and portable build: `pnpm dist` (from the repo root) or `pnpm --filter @dnd/desktop dist`.
-# The app is unsigned, so Windows SmartScreen asks "Run anyway" on first start.
+# macOS dmg + zip (universal, Intel and Apple Silicon): `pnpm dist:mac`, on a Mac only, or the GitHub Actions build.
+# Both are unsigned: Windows SmartScreen asks "Run anyway"; on macOS right-click the app → Open the first time,
+# or run `xattr -cr "/Applications/DND TYPESHIT.app"`.
 appId: com.dndtypeshit.app
 productName: DND TYPESHIT
 copyright: Copyright © 2026
@@ -28,3 +30,15 @@ nsis:
   artifactName: DND-TYPESHIT-Setup-${version}.${ext}
 portable:
   artifactName: DND-TYPESHIT-Portable-${version}.${ext}
+mac:
+  icon: build/icon-1024.png
+  category: public.app-category.role-playing-games
+  # Ad-hoc signature: not notarized, but Apple Silicon will run it.
+  identity: '-'
+  hardenedRuntime: false
+  target:
+    - target: dmg
+      arch: [universal]
+    - target: zip
+      arch: [universal]
+  artifactName: DND-TYPESHIT-${version}-mac.${ext}

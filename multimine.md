@@ -83,6 +83,9 @@ Full phased roadmap: `docs/PLAN.md` — build one phase at a time, user reviews 
   - **Renderer:** `screens/adventure/novel/` (`NovelStage`, `NovelTextBox`, `Bust`, `pages.ts`), and `ui/art.tsx` (`FacesPanel`, `OwnPictureButton`).
 - Sound: `renderer/src/lib/audio.ts` (crossfading layers), `synth.ts` (procedural ambience and music) and `soundscape.ts` (`sceneOf`, `sfxFor`). The CC0 files are in `renderer/src/assets/audio/` (see `CREDITS.md`). Settings: `audio`. The current sound is exposed as `<html data-ambience data-music data-last-sfx>` for tests.
 - Packaging: `pnpm dist` runs electron-builder (`apps/desktop/electron-builder.yml`) and makes the NSIS installer plus a portable exe in `apps/desktop/dist/`. The builds are unsigned, so SmartScreen asks "Run anyway". The icon comes from `scripts/make-icon.mjs`.
+  `pnpm dist:mac` (macOS only) makes a universal dmg + zip, ad-hoc signed: first launch needs right-click → Open or
+  `xattr -cr`. `.github/workflows/build.yml` builds both on a `v*` tag or by hand. On macOS, `main/shellPath.ts` borrows
+  the login shell's PATH so Finder-launched apps still find `claude`/`codex`/`node`.
 - Renderer ↔ main contract lives in `apps/desktop/src/shared/ipc.ts`; validate all renderer input in main.
 
 ## How to verify
